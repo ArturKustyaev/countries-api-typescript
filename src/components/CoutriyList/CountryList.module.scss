@@ -1,0 +1,11 @@
+.countryList {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.countryCard {
+    margin: 0 15px 30px 15px;
+    width: calc(25% - 30px);
+}

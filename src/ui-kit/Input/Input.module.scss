@@ -1,0 +1,27 @@
+.input {
+    border-radius: 6px;
+    border: none;
+    color: #272727;
+    font-size: 20px;
+    height: inherit;
+    outline: none;
+    padding: 10px 12px;
+    transition: border 0.2s ease-out, background-color 0.2s ease-out;
+    width: 100%;
+
+    &::placeholder {
+        color: #BFBFBF;
+        font-size: 18px;
+        line-height: 24px;
+        transition: color 0.2s ease-out
+    }
+
+    &:focus {
+        background-color: #C5E4F9;
+
+        &::placeholder {
+            color: #1390E5
+        }
+
+    }
+}
