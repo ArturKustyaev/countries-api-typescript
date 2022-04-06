@@ -1,52 +1,53 @@
 .select {
     cursor: pointer;
     position: relative;
-
 }
 
-.inner {
-    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+.field {
+    align-items: center;
     background-color: #FFFFFF;
     border-radius: 6px;
-    font-size: 20px;
+    border: 2px solid transparent;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+    display: flex;
+    font-size: 18px;
+    min-width: 300px;
     padding: 12px 15px;
     position: relative;
     text-align: left;
-    min-width: 300px;
+    transition: border 0.2s ease-in-out;
+    width: 100%;
 
-    &::after {
-        border-bottom: 1px solid #BFBFBF;
-        border-right: 1px solid #BFBFBF;
-        content: '';
-        height: 8px;
-        position: absolute;
-        right: 25px;
-        top: 45%;
-        transform: rotate(45deg) translateY(-50%);
-        transform-origin: bottom right;
-        transition: transform 0.2s ease-in-out;
-        width: 8px;
+    &_focused {
+        border: 2px solid #1390e5
     }
 }
 
-.inner_active {
-    &::after {
-        right: 12px;
-        transform: rotate(225deg)
-    }
+.arrow {
+    stroke: #BFBFBF;
+    fill: #BFBFBF;
+    transition: transform 0.2s ease-in-out;
 
+    &_active {
+        transform: rotate(180deg);
+    }
+}
+
+.value {
+    color: black;
+    flex-grow: 1;
+    padding-right: 15px;
+    text-align: left;
 }
 
 .placeholder {
-    text-align: left;
     color: #BFBFBF;
-    padding-right: 15px;
 }
 
 .dropdown {
     background-color: #FFFFFF;
     border-radius: 6px;
-    box-shadow: 0px 2px 10px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 2px 15px 0px rgba(34, 60, 80, 0.2);
     left: 0;
     max-height: 250px;
     overflow-y: auto;
@@ -65,7 +66,7 @@
 
 .item {
     color: #272727;
-    font-size: 20px;
+    font-size: 18px;
     padding: 10px 30px;
 
     &:hover {

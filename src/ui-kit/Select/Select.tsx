@@ -1,8 +1,9 @@
 import classNames from 'classnames'
 import { FC, HTMLAttributes, useState } from 'react'
+import { Icon } from 'ui-kit'
 import classes from './Select.module.scss'
 
-export type FilterValueType = 'africa' | 'america' | 'asia' | 'europe' | 'oceania'
+export type FilterValueType = 'africa' | 'america' | 'asia' | 'europe' | 'oceania' | 'all'
 
 interface IFilterItem {
 	text: string
@@ -32,27 +33,28 @@ export const orderFields: Array<IFilterItem> = [
 	}
 ]
 
-interface Props extends HTMLAttributes<HTMLSelectElement> {
+interface Props extends HTMLAttributes<HTMLDivElement> {
+	className?: string
+	tabIndex?: number
 	items?: Array<IFilterItem>
+	placeholder?: string
 	onSelectItem: (value: FilterValueType) => void
 }
 
-export const Select: FC<Props> = ({ items = orderFields, onSelectItem, ...rest }): JSX.Element => {
+export const Select: FC<Props> = ({
+	className,
+	tabIndex = 0,
+	items = orderFields,
+	placeholder = 'Select something...',
+	onSelectItem,
+	...rest
+}): JSX.Element => {
 	const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false)
+	const [selectedIndex, setSelectedIndex] = useState<number>(-1)
 
-	const innerStyles = classNames(classes.inner, {
-		[classes.inner_active]: isDropdownVisible
-	})
-
-	const dropdownStyles = classNames(classes.dropdown, {
-		[classes.dropdown_active]: isDropdownVisible
-	})
-	
-	const setDefaultValue = (): number => {
-		return rest.defaultValue ? items.findIndex(item => item.value === rest.defaultValue) : -1
+	const toggleDropdownClickHandler = () => {
+		setIsDropdownVisible(!isDropdownVisible)
 	}
-
-	const [selectedIndex, setSelectedIndex] = useState<number>(setDefaultValue())
 
 	const clickHandler = (index: number) => {
 		onSelectItem(items[index].value)
@@ -64,14 +66,34 @@ export const Select: FC<Props> = ({ items = orderFields, onSelectItem, ...rest }
 		setIsDropdownVisible(false)
 	}
 
+	const fieldStyles = classNames(classes.field, {
+		[classes.active]: isDropdownVisible,
+		[classes.field_focused]: isDropdownVisible
+	})
+
+	const dropdownStyles = classNames(classes.dropdown, {
+		[classes.dropdown_active]: isDropdownVisible
+	})
+
+	const arrowStyles = classNames(classes.arrow, {
+		[classes.arrow_active]: isDropdownVisible
+	})
+	const valueStyles = classNames(classes.value, {
+		[classes.placeholder]: selectedIndex === -1
+	})
+
 	return (
-		<div className={classes.select} tabIndex={3} onBlur={closeHandler}>
-			<div className={innerStyles} onClick={() => setIsDropdownVisible(!isDropdownVisible)}>
-				{selectedIndex !== -1 ? (
-					items[selectedIndex].text
-				) : (
-					<span className={classes.placeholder}>Filter by region</span>
-				)}
+		<div
+			className={classNames(classes.select, className)}
+			tabIndex={tabIndex}
+			onBlur={closeHandler}
+			{...rest}
+		>
+			<div className={fieldStyles} onClick={toggleDropdownClickHandler}>
+				<span className={valueStyles}>
+					{selectedIndex !== -1 ? items[selectedIndex].text : placeholder}
+				</span>
+				<Icon className={arrowStyles} type='ArrowDown' />
 			</div>
 			<ul className={dropdownStyles}>
 				{items.map((item, index) => (

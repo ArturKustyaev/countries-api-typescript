@@ -1,3 +1,4 @@
+import CountryPage from './CountryPage'
 import MainPage from './MainPage'
 
-export { MainPage }
+export { CountryPage, MainPage }

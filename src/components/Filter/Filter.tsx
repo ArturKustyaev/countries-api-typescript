@@ -1,20 +1,24 @@
-import { FC, useState } from 'react'
+import { FilterContext } from 'context'
+import { FC, useContext } from 'react'
 import { FilterValueType, Input, Select } from 'ui-kit'
 import classes from './Filter.module.scss'
 
 export const Filter: FC = (): JSX.Element => {
-	const [filter, setFilter] = useState<FilterValueType | null>(null)
+	const { filter, setFilter } = useContext(FilterContext)
 
 	const filterSelectHandler = (value: FilterValueType) => {
 		setFilter(value)
-		console.log(filter)
 	}
 
 	return (
 		<div className={classes.filter}>
 			<div className={classes.inner}>
 				<Input className={classes.input} placeholder='Seacrh a country' />
-				<Select onSelectItem={filterSelectHandler} />
+				<Select
+					placeholder='Filter by region'
+					onSelectItem={filterSelectHandler}
+					defaultValue={filter}
+				/>
 			</div>
 		</div>
 	)
