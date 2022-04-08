@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
-import './Button.sass'
+import classes from './Button.module.scss'
 
 export type ButtonVariantType = 'primary' | 'outlined'
 
@@ -16,12 +16,12 @@ export const Button: FC<IButtonProps> = ({
 	variant = 'primary',
 	...rest
 }): JSX.Element => {
-	const classes = classNames('ui-button', className, {
+	const buttonClasses = classNames(classes.button, className, {
 		'ui-button--outlined': variant === 'outlined'
 	})
 
 	return (
-		<button className={classes} {...rest}>
+		<button className={buttonClasses} {...rest}>
 			{children}
 		</button>
 	)

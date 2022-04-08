@@ -1,0 +1,90 @@
+.root {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flag {
+    max-width: 500px;
+    margin-right: 35px;
+}
+
+.info {
+    flex: 1 1 auto;
+    text-align: left;
+}
+
+.name {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.stats {
+    display: flex;
+    margin-left: -10px;
+    margin-right: -10px;
+
+    &_col {
+        flex: 1 1 auto;
+        margin-left: 10px;
+        margin-right: 10px;
+        max-width: 350px;
+        min-width: 150px;
+    }
+
+    &_row {
+        margin-bottom: 6px;
+    }
+}
+
+.description {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 10px;
+
+    &BorderCountries{
+        line-height: 40px;
+        min-width: max-content;
+    }
+}
+
+.value {
+    display: inline;
+    font-weight: 400;
+
+    &BorderCountries{
+        line-height: 40px;
+    }
+}
+
+.button {
+    &BorderCountry {
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+        color: black;
+        font-size: 18px;
+        line-height: 40px;
+        padding: 0 15px;
+        text-decoration: none;
+        transition: box-shadow 0.2s ease-in-out;
+
+        &:hover {
+            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);   
+        }
+    }
+}
+
+.border_countries {
+    margin-top: 50px;
+    display: flex;
+}
+
+.borderCountriesWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+}

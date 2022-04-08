@@ -9,9 +9,11 @@ export const CountriesList: FC = (): JSX.Element => {
 	const { filter } = useContext(FilterContext)
 
 	useEffect(() => {
-		CountriesApi.fetchCountryCards(filter).then(response => {
-			setCountries(response.data)
-		})
+		CountriesApi.getCountries(filter, { fields: 'name,population,region,capital,flags' }).then(
+			response => {
+				setCountries(response.data)
+			}
+		)
 	}, [filter])
 
 	return (

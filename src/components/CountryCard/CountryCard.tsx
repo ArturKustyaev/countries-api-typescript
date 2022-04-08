@@ -13,7 +13,7 @@ export const CountryCard: FC<Props> = ({ className, country, ...rest }): JSX.Ele
 	const navigate = useNavigate()
 
 	const clickHandler = () => {
-		navigate(`/${country.name.common}`)
+		navigate(`/${ country.name.common.toLowerCase()}`)
 	}
 
 	return (

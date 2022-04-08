@@ -1,5 +1,10 @@
+import { ICountryInfo } from 'components'
 import axios, { AxiosResponse } from 'axios'
 import { ICountryCard } from 'components'
+
+interface IParams {
+	[key: string]: string
+}
 
 const instance = axios.create({
 	baseURL: 'https://restcountries.com/v3.1/',
@@ -7,13 +12,34 @@ const instance = axios.create({
 })
 
 export const CountriesApi = {
-	fetchCountryCards: (region: string = 'all'): Promise<AxiosResponse<Array<ICountryCard>>> => {
+	getCountries: (
+		region: string = 'all',
+		params?: IParams
+	): Promise<AxiosResponse<Array<ICountryCard>>> => {
 		const request = region !== 'all' ? 'region/' + region : region
-		
+
 		return instance.get(request, {
 			params: {
-				fields: 'name,population,region,capital,flags'
+				...params
 			}
 		})
-	}
+	},
+	getCountryByName: (
+		country: string,
+		params?: IParams
+	): Promise<AxiosResponse<Array<ICountryInfo>>> => {
+		return instance.get(`/name/${country}`, {
+			params: {
+				...params
+			}
+		})
+	},
+	getCountriesByAlfaCode: (alfaCodesArray: Array<string>, params?: IParams): Promise<AxiosResponse<Array<ICountryInfo>>> => {
+		return instance.get('/alpha', {
+			params: {
+				...params,
+				codes: alfaCodesArray.join(',')
+			}
+		})
+	} 
 }
