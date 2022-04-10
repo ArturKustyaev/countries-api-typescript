@@ -1,19 +1,22 @@
-import { Container, CountriesList, Filter, Header } from 'components'
-import { FilterContext } from 'context'
-import { FC, useState } from 'react'
-import { FilterValueType } from 'ui-kit'
+import { countriesApi } from 'api'
+import { Container, CountriesList, Filter, Header, ICountryCard } from 'components'
+import { CountriesContext } from 'context'
+import { FC, useContext, useEffect, useState } from 'react'
 
 export const MainPage: FC = (): JSX.Element => {
-	const [filter, setFilter] = useState<FilterValueType>('all')
+	const { countries, setCountries } = useContext(CountriesContext)
+
+	useEffect(() => {
+		countriesApi.getCountries({ fields: 'name,population,region,capital,flags' }).then(response => {
+			setCountries(response.data)
+		})
+	}, [])
 
 	return (
 		<div>
 			<Header />
 			<Container>
-				<FilterContext.Provider value={{ filter, setFilter }}>
-					<Filter />
-					<CountriesList />
-				</FilterContext.Provider>
+				{countries.length !== 0 && <CountriesList countries={countries} />}
 			</Container>
 		</div>
 	)

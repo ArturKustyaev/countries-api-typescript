@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { FC, HTMLAttributes, useState } from 'react'
+import { FC, HTMLAttributes, KeyboardEvent, useState } from 'react'
 import { Icon } from 'ui-kit'
 import classes from './Select.module.scss'
 
@@ -62,42 +62,81 @@ export const Select: FC<Props> = ({
 		closeHandler()
 	}
 
+	const keyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+		if (e.code === 'Space') {
+			e.preventDefault()
+			setIsDropdownVisible(true)
+		}
+
+		if (e.code === 'ArrowDown') {
+			e.preventDefault()
+			if (selectedIndex !== orderFields.length - 1 && isDropdownVisible) {
+				setSelectedIndex(selectedIndex + 1)
+			}
+		}
+
+		if (e.code === 'ArrowUp') {
+			e.preventDefault()
+			if (selectedIndex !== 0 && isDropdownVisible) {
+				setSelectedIndex(selectedIndex - 1)
+			}
+		}
+
+		if (e.code === 'Enter') {
+			e.preventDefault()
+			if (isDropdownVisible) {
+				clickHandler(selectedIndex)
+			}
+		}
+	}
+
 	const closeHandler = () => {
 		setIsDropdownVisible(false)
 	}
-
-	const fieldStyles = classNames(classes.field, {
-		[classes.active]: isDropdownVisible,
-		[classes.field_focused]: isDropdownVisible
-	})
-
-	const dropdownStyles = classNames(classes.dropdown, {
-		[classes.dropdown_active]: isDropdownVisible
-	})
-
-	const arrowStyles = classNames(classes.arrow, {
-		[classes.arrow_active]: isDropdownVisible
-	})
-	const valueStyles = classNames(classes.value, {
-		[classes.placeholder]: selectedIndex === -1
-	})
 
 	return (
 		<div
 			className={classNames(classes.select, className)}
 			tabIndex={tabIndex}
+			onKeyDown={keyDownHandler}
 			onBlur={closeHandler}
+			role='combobox'
 			{...rest}
 		>
-			<div className={fieldStyles} onClick={toggleDropdownClickHandler}>
-				<span className={valueStyles}>
+			<div
+				className={classNames(classes.field, {
+					[classes.active]: isDropdownVisible,
+					[classes.field_focused]: isDropdownVisible
+				})}
+				onClick={toggleDropdownClickHandler}
+			>
+				<span
+					className={classNames(classes.value, {
+						[classes.placeholder]: selectedIndex === -1
+					})}
+				>
 					{selectedIndex !== -1 ? items[selectedIndex].text : placeholder}
 				</span>
-				<Icon className={arrowStyles} type='ArrowDown' />
+				<Icon
+					className={classNames(classes.arrow, {
+						[classes.arrow_active]: isDropdownVisible
+					})}
+					type='ArrowDown'
+				/>
 			</div>
-			<ul className={dropdownStyles}>
+			<ul
+				className={classNames(classes.dropdown, {
+					[classes.dropdown_active]: isDropdownVisible
+				})}
+			>
 				{items.map((item, index) => (
-					<li className={classes.item} key={item.value} onClick={() => clickHandler(index)}>
+					<li
+						className={classNames(classes.item, {
+							[classes.itemSelected]: index === selectedIndex
+						})}
+						key={item.value}
+						onClick={() => clickHandler(index)}
+					>
 						{item.text}
 					</li>
 				))}

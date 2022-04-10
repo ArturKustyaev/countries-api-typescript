@@ -1,4 +1,4 @@
-import { CountriesApi } from 'api'
+import { countriesApi } from 'api'
 import classNames from 'classnames'
 import { ICountryInfo, ICurrencies } from 'components'
 import { FC, useEffect, useState } from 'react'
@@ -34,7 +34,7 @@ export const CountryInfo: FC<Props> = ({ country }): JSX.Element => {
 	const currencies = getFormattedCurrencies(country.currencies)
 
 	useEffect(() => {
-		CountriesApi.getCountriesByAlfaCode(country.borders, { fields: 'name' }).then(response => {
+		countriesApi.getCountriesByAlfaCode(country.borders, { fields: 'name' }).then(response => {
 			setBorderCountries(response.data)
 		})
 	}, [country])

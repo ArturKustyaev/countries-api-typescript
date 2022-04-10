@@ -1,3 +1,3 @@
-import { CountriesApi } from './countriesApi'
+import { countriesApi } from './countriesApi'
 
-export { CountriesApi }
+export { countriesApi }

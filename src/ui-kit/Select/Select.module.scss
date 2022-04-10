@@ -1,6 +1,7 @@
 .select {
     cursor: pointer;
     position: relative;
+
 }
 
 .field {
@@ -69,7 +70,7 @@
     font-size: 18px;
     padding: 10px 30px;
 
-    &:hover {
+    &:hover, &Selected {
         background-color: darken(#FFFFFF, 10%);
     }
 

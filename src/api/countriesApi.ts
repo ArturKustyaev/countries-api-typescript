@@ -11,14 +11,12 @@ const instance = axios.create({
 	timeout: 10000
 })
 
-export const CountriesApi = {
+export const countriesApi = {
 	getCountries: (
-		region: string = 'all',
 		params?: IParams
 	): Promise<AxiosResponse<Array<ICountryCard>>> => {
-		const request = region !== 'all' ? 'region/' + region : region
 
-		return instance.get(request, {
+		return instance.get('all', {
 			params: {
 				...params
 			}
