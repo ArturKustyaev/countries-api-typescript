@@ -9,7 +9,7 @@ interface Props {
 	country: ICountryInfo
 }
 
-const placeObjectFieldsInArray = (object: object): Array<string> => {
+const placeObjectFieldsInArray = (object: object) => {
 	let array: Array<string> = []
 
 	if (object) {
@@ -19,8 +19,8 @@ const placeObjectFieldsInArray = (object: object): Array<string> => {
 	return array
 }
 
-const getFormattedCurrencies = (currencies: object): Array<string> => {
-	let array: Array<string> = []
+const getFormattedCurrencies = (currencies: object) => {
+	let array: string[] = []
 	Object.entries(currencies).forEach(([, currency]: [string, ICurrencies]) => {
 		array.push(currency.name)
 	})
@@ -91,7 +91,7 @@ export const CountryInfo: FC<Props> = ({ country }): JSX.Element => {
 								<Link
 									className={classes.buttonBorderCountry}
 									key={borderCountry.name.common}
-									to={`/${borderCountry.name.common.toLowerCase()}`}
+									to={`/countries-api-typescript/${borderCountry.name.common.toLowerCase()}`}
 								>
 									{borderCountry.name.common}
 								</Link>

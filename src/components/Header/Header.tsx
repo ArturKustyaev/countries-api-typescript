@@ -8,10 +8,10 @@ export const Header: FC = (): JSX.Element => {
 		<div className={classes.root}>
 			<Container>
 				<div className={classes.inner}>
-					<Link to={'/'} className={classes.logo}>
+					<Link to={'/countries-api-typescript'} className={classes.logo}>
 						Where in the world?
 					</Link>
-				{/* 	<div className={classes.themeMode}>Dark Mode</div> */}
+					{/* 	<div className={classes.themeMode}>Dark Mode</div> */}
 				</div>
 			</Container>
 		</div>

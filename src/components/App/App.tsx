@@ -12,8 +12,8 @@ export const App: FC = (): JSX.Element => {
 			<BrowserRouter>
 				<div className={classes.App}>
 					<Routes>
-						<Route path='/' element={<MainPage />} />
-						<Route path='/:name' element={<CountryPage />} />
+						<Route path='/countries-api-typescript' element={<MainPage />} />
+						<Route path='/countries-api-typescript/:name' element={<CountryPage />} />
 					</Routes>
 				</div>
 			</BrowserRouter>

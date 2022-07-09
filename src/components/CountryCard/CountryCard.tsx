@@ -15,7 +15,7 @@ export const CountryCard: FC<Props> = ({ className, country, ...rest }): JSX.Ele
 	const navigate = useNavigate()
 
 	const clickHandler = () => {
-		navigate(`/${country.name.common.toLowerCase()}`)
+		navigate(`/countries-api-typescript/${country.name.common.toLowerCase()}`)
 	}
 
 	const imgLoaded = () => {
