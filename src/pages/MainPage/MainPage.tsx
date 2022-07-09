@@ -1,22 +1,21 @@
-import { countriesApi } from 'api'
-import { Container, CountriesList, Filter, Header, ICountryCard } from 'components'
-import { CountriesContext } from 'context'
-import { FC, useContext, useEffect, useState } from 'react'
+import { Container, CountriesList, Header } from 'components'
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { FC, useEffect } from 'react'
+import { fetchCountries } from 'store/reducers/countrySlice'
 
 export const MainPage: FC = (): JSX.Element => {
-	const { countries, setCountries } = useContext(CountriesContext)
+	const { q, region } = useAppSelector(state => state.filter)
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		countriesApi.getCountries({ fields: 'name,population,region,capital,flags' }).then(response => {
-			setCountries(response.data)
-		})
-	}, [])
+		dispatch(fetchCountries({ fields: 'name,population,region,capital,flags', query: q }))
+	}, [q, region])
 
 	return (
 		<div>
 			<Header />
 			<Container>
-				{countries.length !== 0 && <CountriesList countries={countries} />}
+				<CountriesList />
 			</Container>
 		</div>
 	)

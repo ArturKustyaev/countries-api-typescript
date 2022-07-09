@@ -10,12 +10,14 @@ export const CountryPage: FC = (): JSX.Element => {
 
 	useEffect(() => {
 		if (name) {
-			countriesApi.getCountryByName(name, {
-				fields:
-					'name,population,tld,currencies,subregion,languages,borders,area,region,capital,flags'
-			}).then(response => {
-				setCountry(response.data[0])
-			})
+			countriesApi
+				.getCountryByName(name, {
+					fields:
+						'name,population,tld,currencies,subregion,languages,borders,area,region,capital,flags'
+				})
+				.then(response => {
+					setCountry(response.data[0])
+				})
 		}
 	}, [name])
 

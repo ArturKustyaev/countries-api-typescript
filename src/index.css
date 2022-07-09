@@ -1,4 +1,5 @@
-*, *::before,
+*,
+*::before,
 *::after {
     box-sizing: border-box;
 }
@@ -7,8 +8,8 @@
     font-family: 'Poppins', sans-serif;
 }
 
-ul[class],
-ol[class] {
+ul,
+ol {
     padding: 0;
 }
 
@@ -30,10 +31,8 @@ dd {
 }
 
 body {
-    min-height: 100vh;
-    scroll-behavior: smooth;
-    text-rendering: optimizeSpeed;
-    line-height: 1.5;
+    overflow-x: hidden;
+    margin-right: calc(-1 * (100vw - 100%));
 }
 
 ul[class],
@@ -61,6 +60,6 @@ select {
     font: inherit;
 }
 
-body{
+body {
     background-color: #f3f3f39f;
 }

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
+
 import { Button } from './Button'
 
 describe('Test UI button', () => {
@@ -24,7 +24,7 @@ describe('Test UI button', () => {
 	test('the button to have text', () => {
 		render(<Button>test button text</Button>)
 		expect(screen.getByRole('button')).toBeInTheDocument();
-		expect(screen.getByRole('button')).toHaveTextContent('test button text')
+		expect(screen.getByRole('button')).toHaveTextContent(/test button text/i)
 	})
 
 })

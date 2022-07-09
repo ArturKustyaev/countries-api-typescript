@@ -1,34 +1,68 @@
-import { CountriesContext, FilterContext } from 'context'
-import { ChangeEvent, FC, useContext, useEffect, useState } from 'react'
-import { FilterValueType, Input, Select } from 'ui-kit'
+import { useAppSelector } from 'hooks'
+import { RegionType } from 'models'
+import { ChangeEvent, FC, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setRegion, setSearch } from 'store/reducers/filterSlice'
+import { Input, OptionType, Select } from 'ui-kit'
+import { useDebouncedCallback } from 'use-debounce'
 import classes from './Filter.module.scss'
 
-interface Props {
-	onSearch: (selectQuery: string, region: string) => void
-}
+export const options: OptionType<RegionType>[] = [
+	{
+		label: 'All countries',
+		value: 'all'
+	},
+	{
+		label: 'Africa',
+		value: 'africa'
+	},
+	{
+		label: 'America',
+		value: 'americas'
+	},
+	{
+		label: 'Asia',
+		value: 'asia'
+	},
+	{
+		label: 'Europe',
+		value: 'europe'
+	},
+	{
+		label: 'Oceania',
+		value: 'oceania'
+	}
+]
 
-export const Filter: FC<Props> = ({ onSearch }): JSX.Element => {
-	const [searchQuery, setSearchQuery] = useState<string>('')
-	const [region, setRegion] = useState<FilterValueType>('all')
+export const Filter: FC = (): JSX.Element => {
+	const { q } = useAppSelector(state => state.filter)
+	const [inputValue, setInputValue] = useState<string>(q)
+	const dispatch = useDispatch()
 
-	useEffect(() => {
-		onSearch(searchQuery, region)
-	}, [searchQuery, region])
+	const debounceDispatch = useDebouncedCallback(() => {
+		dispatch(setSearch(inputValue))
+	}, 500)
 
 	const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-		setSearchQuery(e.target.value)
+		setInputValue(e.target.value)
+
+		debounceDispatch()
+	}
+
+	const selectHandler = (region: RegionType) => {
+		dispatch(setRegion(region))
 	}
 
 	return (
-		<div className={classes.filter}>
+		<div className={classes.root}>
 			<div className={classes.inner}>
 				<Input
 					className={classes.input}
 					placeholder='Seacrh a country'
-					value={searchQuery}
+					value={inputValue}
 					onChange={inputHandler}
 				/>
-				<Select placeholder='Filter by region' onSelectItem={setRegion} />
+				<Select className={classes.select} placeholder='Filter by region' options={options} onSelectItem={selectHandler} />
 			</div>
 		</div>
 	)

@@ -1,15 +1,40 @@
-.filter {
+@import 'styles';
+
+.root {
     margin-bottom: 50px;
+
+    @media (max-width: $breakpoint-sm) {
+        margin-bottom: 30px;
+    }
 }
 
 .inner {
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: $breakpoint-sm) {
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
 .input {
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
     max-width: 400px;
+    margin-right: 30px;
     width: 100%;
     flex: 1 0 auto;
+
+    @media (max-width: $breakpoint-xs) {
+        max-width: 100%;
+    }
+}
+
+.select {
+    max-width: 400px;
+    width: 100%;
+
+    @media (max-width: $breakpoint-xs) {
+        max-width: 100%;
+    }
 }

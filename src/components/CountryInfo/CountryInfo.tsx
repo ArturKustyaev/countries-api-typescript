@@ -28,9 +28,8 @@ const getFormattedCurrencies = (currencies: object): Array<string> => {
 }
 
 export const CountryInfo: FC<Props> = ({ country }): JSX.Element => {
-	console.log(country)
-	const [borderCounries, setBorderCountries] = useState<Array<ICountryInfo>>([])
-	const languages: Array<string> = placeObjectFieldsInArray(country.languages)
+	const [borderCounries, setBorderCountries] = useState<ICountryInfo[]>([])
+	const languages = placeObjectFieldsInArray(country.languages)
 	const currencies = getFormattedCurrencies(country.currencies)
 
 	useEffect(() => {
@@ -83,7 +82,7 @@ export const CountryInfo: FC<Props> = ({ country }): JSX.Element => {
 					</div>
 				</div>
 				<div className={classes.border_countries}>
-					<span className={classNames(classes.description, classes.descriptionBorderCountries)}>
+					<span className={classNames(classes.description, classes.border_countries_title)}>
 						Border Countries:
 					</span>
 					<div className={classes.borderCountriesWrapper}>

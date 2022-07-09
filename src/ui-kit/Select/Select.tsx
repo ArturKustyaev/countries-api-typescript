@@ -1,50 +1,25 @@
 import classNames from 'classnames'
+import { RegionType } from 'models'
 import { FC, HTMLAttributes, KeyboardEvent, useState } from 'react'
 import { Icon } from 'ui-kit'
 import classes from './Select.module.scss'
 
-export type FilterValueType = 'africa' | 'america' | 'asia' | 'europe' | 'oceania' | 'all'
-
-interface IFilterItem {
-	text: string
-	value: FilterValueType
+export interface OptionType<T> {
+	value: T
+	label: string
 }
-
-export const orderFields: Array<IFilterItem> = [
-	{
-		text: 'Africa',
-		value: 'africa'
-	},
-	{
-		text: 'America',
-		value: 'america'
-	},
-	{
-		text: 'Asia',
-		value: 'asia'
-	},
-	{
-		text: 'Europe',
-		value: 'europe'
-	},
-	{
-		text: 'Oceania',
-		value: 'oceania'
-	}
-]
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	className?: string
 	tabIndex?: number
-	items?: Array<IFilterItem>
+	options: any[]
 	placeholder?: string
-	onSelectItem: (value: FilterValueType) => void
+	onSelectItem: (value: RegionType) => void
 }
 
 export const Select: FC<Props> = ({
 	className,
-	tabIndex = 0,
-	items = orderFields,
+	options,
 	placeholder = 'Select something...',
 	onSelectItem,
 	...rest
@@ -57,36 +32,30 @@ export const Select: FC<Props> = ({
 	}
 
 	const clickHandler = (index: number) => {
-		onSelectItem(items[index].value)
+		onSelectItem(options[index].value)
 		setSelectedIndex(index)
 		closeHandler()
 	}
 
 	const keyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
-		if (e.code === 'Space') {
-			e.preventDefault()
-			setIsDropdownVisible(true)
-		}
+		e.preventDefault()
 
-		if (e.code === 'ArrowDown') {
-			e.preventDefault()
-			if (selectedIndex !== orderFields.length - 1 && isDropdownVisible) {
-				setSelectedIndex(selectedIndex + 1)
-			}
-		}
+		switch (e.code) {
+			case 'Space':
+				setIsDropdownVisible(true)
+				break
+			case 'ArrowDown':
+				selectedIndex !== options.length - 1 &&
+					isDropdownVisible &&
+					setSelectedIndex(selectedIndex + 1)
+				break
+			case 'ArrowUp':
+				selectedIndex !== 0 && isDropdownVisible && setSelectedIndex(selectedIndex - 1)
+				break
+			case 'Enter':
+				isDropdownVisible && clickHandler(selectedIndex)
 
-		if (e.code === 'ArrowUp') {
-			e.preventDefault()
-			if (selectedIndex !== 0 && isDropdownVisible) {
-				setSelectedIndex(selectedIndex - 1)
-			}
-		}
-
-		if (e.code === 'Enter') {
-			e.preventDefault()
-			if (isDropdownVisible) {
-				clickHandler(selectedIndex)
-			}
+				break
 		}
 	}
 
@@ -96,26 +65,21 @@ export const Select: FC<Props> = ({
 
 	return (
 		<div
-			className={classNames(classes.select, className)}
-			tabIndex={tabIndex}
+			className={classNames(classes.root, className)}
+			tabIndex={0}
+			role='combobox'
+			onClick={toggleDropdownClickHandler}
 			onKeyDown={keyDownHandler}
 			onBlur={closeHandler}
-			role='combobox'
 			{...rest}
 		>
-			<div
-				className={classNames(classes.field, {
-					[classes.active]: isDropdownVisible,
-					[classes.field_focused]: isDropdownVisible
-				})}
-				onClick={toggleDropdownClickHandler}
-			>
+			<div className={classNames(classes.select)}>
 				<span
 					className={classNames(classes.value, {
 						[classes.placeholder]: selectedIndex === -1
 					})}
 				>
-					{selectedIndex !== -1 ? items[selectedIndex].text : placeholder}
+					{selectedIndex !== -1 ? options[selectedIndex].label : placeholder}
 				</span>
 				<Icon
 					className={classNames(classes.arrow, {
@@ -126,18 +90,18 @@ export const Select: FC<Props> = ({
 			</div>
 			<ul
 				className={classNames(classes.dropdown, {
-					[classes.dropdown_active]: isDropdownVisible
+					[classes.dropdown__active]: isDropdownVisible
 				})}
 			>
-				{items.map((item, index) => (
+				{options.map((item, index) => (
 					<li
-						className={classNames(classes.item, {
-							[classes.itemSelected]: index === selectedIndex
+						className={classNames(classes.option_item, {
+							[classes.option_item__selected]: index === selectedIndex
 						})}
 						key={item.value}
 						onClick={() => clickHandler(index)}
 					>
-						{item.text}
+						{item.label}
 					</li>
 				))}
 			</ul>

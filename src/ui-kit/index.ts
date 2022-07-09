@@ -1,10 +1,10 @@
 import Button from './Button'
 import Icon from './Icon'
 import Input from './Input'
-import Select from './Select'
-import { FilterValueType } from './Select/Select'
+import Select, { OptionType } from './Select'
+import Skeleton from './Skeleton'
 
-export { Button, Icon, Input, Select }
-export { type FilterValueType }
+export { Button, Icon, Input, Select, Skeleton }
+export { type OptionType }
 
 

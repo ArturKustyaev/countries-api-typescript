@@ -1,3 +1,5 @@
+@import 'styles';
+
 .countryList {
     display: flex;
     flex-wrap: wrap;
@@ -8,4 +10,20 @@
 .countryCard {
     margin: 0 15px 30px 15px;
     width: calc(25% - 30px);
+
+    @media (max-width: $breakpoint-md) {
+        width: calc(33.33% - 30px);
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        width: calc(50% - 30px);
+    }
+
+    @media (max-width: $breakpoint-xs) {
+        width: calc(100% - 30px);
+    }
+}
+
+.error_message {
+    font-size: 20px;
 }

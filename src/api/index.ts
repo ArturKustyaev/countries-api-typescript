@@ -1,3 +1,3 @@
-import { countriesApi } from './countriesApi'
+import { countriesApi, IFetchCountriesParams, IResponseParams } from './countriesApi'
 
-export { countriesApi }
+export { countriesApi, type IFetchCountriesParams, type IResponseParams }
